@@ -1,0 +1,15 @@
+
+name: 'migration-checker'
+description: 'Check that migrations have been run'
+author: 'birdiecare'
+inputs:
+  migrations_directory:
+    description: 'Migration directory'
+  compare_ref:
+    description: 'Ref to compare from'
+  ignore_index:
+    description: 'boolean; true = skip index.ts file in the migrations directory'
+    default: false
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

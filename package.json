@@ -1,0 +1,88 @@
+{
+  "name": "migrate-me-pls",
+  "version": "0.0.1",
+  "description": "Check if your migrations have been run",
+  "main": "lib/main.js",
+  "scripts": {
+    "start": "ts-node ./src/main.ts",
+    "prebuild": "rimraf lib && rimraf dist",
+    "build": "tsc",
+    "lint": "eslint './src/**/*.{js,jsx,ts,tsx}' && prettier --check './**/*.{html,css,md,json,less,sass,scss,graphql,gql,mdx,yml,yaml}'",
+    "lint:fix": "import-sort --write './**/*.{js,jsx,ts,tsx}' && eslint --fix './**/*.{js,jsx,ts,tsx}' && prettier --write './**/*.{html,css,md,json,less,sass,scss,graphql,gql,mdx,yml,yaml}'",
+    "package": "ncc build --minify && git add dist",
+    "test": "jest --passWithNoTests",
+    "all": "npm run lint:fix && npm run test && npm run build && npm run package"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leow93/time-to-migrate.git"
+  },
+  "keywords": [
+    "Github",
+    "Action",
+    "Migrate",
+    "Migration"
+  ],
+  "author": "leow93",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leow93/time-to-migrate/issues"
+  },
+  "homepage": "https://github.com/leow93/time-to-migrate#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.4",
+    "execa": "^4.0.3",
+    "knex": "^0.21.6",
+    "typeorm": "^0.2.25"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "@types/node": "^14.6.0",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "import-sort": "^6.0.0",
+    "import-sort-cli": "^6.0.0",
+    "import-sort-parser-typescript": "^6.0.0",
+    "import-sort-style-airkro": "^0.1.7",
+    "jest": "^26.4.2",
+    "jest-circus": "^26.4.2",
+    "js-yaml": "^3.14.0",
+    "lint-staged": "^10.2.13",
+    "prettier": "2.1.0",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.2.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build && npm run package && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "import-sort --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{html,css,md,json,less,sass,scss,graphql,gql,mdx,yml,yaml}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "importSort": {
+    ".js, .jsx": {
+      "parser": "babylon",
+      "style": "airkro"
+    },
+    ".ts, .tsx": {
+      "parser": "typescript",
+      "style": "airkro"
+    }
+  }
+}
